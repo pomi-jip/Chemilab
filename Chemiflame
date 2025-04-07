@@ -1,0 +1,92 @@
+let metals = [];
+let fireColor;
+let fireX = 250, fireY = 200;
+
+function setup() {
+  createCanvas(500, 400);
+  fireColor = color(255); // 기본 불꽃 색
+  metals.push(new Metal("Na", 50, 300, color(255, 220, 0)));
+  metals.push(new Metal("K", 120, 300, color(200, 100, 255)));
+  metals.push(new Metal("Cu", 190, 300, color(0, 255, 100)));
+}
+
+function draw() {
+  background(30);
+  
+  // 불꽃
+  fill(fireColor);
+  noStroke();
+  ellipse(fireX, fireY, 150, 180);
+  fill(255);
+  textSize(16);
+  textAlign(CENTER);
+  text("불꽃 영역", fireX, fireY + 110);
+
+  // 금속들
+  for (let m of metals) {
+    m.display();
+    m.drag();
+  }
+}
+
+function mousePressed() {
+  for (let m of metals) {
+    m.pressed();
+  }
+}
+
+function mouseReleased() {
+  for (let m of metals) {
+    if (m.dragging && dist(m.x, m.y, fireX, fireY) < 80) {
+      fireColor = m.fireColor;
+    }
+    m.released();
+  }
+}
+
+// 금속 클래스
+class Metal {
+  constructor(label, x, y, fireColor) {
+    this.label = label;
+    this.x = x;
+    this.y = y;
+    this.w = 50;
+    this.h = 50;
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.dragging = false;
+    this.fireColor = fireColor;
+  }
+
+  display() {
+    fill(this.fireColor);
+    rect(this.x, this.y, this.w, this.h, 10);
+    fill(0);
+    textAlign(CENTER, CENTER);
+    text(this.label, this.x + this.w/2, this.y + this.h/2);
+  }
+
+  pressed() {
+    if (
+      mouseX > this.x &&
+      mouseX < this.x + this.w &&
+      mouseY > this.y &&
+      mouseY < this.y + this.h
+    ) {
+      this.dragging = true;
+      this.offsetX = this.x - mouseX;
+      this.offsetY = this.y - mouseY;
+    }
+  }
+
+  released() {
+    this.dragging = false;
+  }
+
+  drag() {
+    if (this.dragging) {
+      this.x = mouseX + this.offsetX;
+      this.y = mouseY + this.offsetY;
+    }
+  }
+}
