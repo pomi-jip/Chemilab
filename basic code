@@ -1,0 +1,49 @@
+name: chemilab
+description: A web app for simple flame test experiments.
+
+environment:
+  sdk: '>=2.17.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(ChemilabApp());
+}
+
+class ChemilabApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Chemilab',
+      home: Scaffold(
+        appBar: AppBar(title: Text('Chemilab: 불꽃반응 실험')),
+        body: Center(
+          child: Text('여기에 실험 인터페이스가 생길 거예요!'),
+        ),
+      ),
+    );
+  }
+}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Chemilab</title>
+    <link rel="manifest" href="manifest.json" />
+  </head>
+  <body>
+    <script src="main.dart.js" type="application/javascript"></script>
+  </body>
+</html>
