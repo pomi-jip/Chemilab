@@ -1,40 +1,71 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>Chemiflame Lab</title>
+  <meta charset="UTF-8">
+  <title>비커 UI</title>
   <style>
-    body {
-      background-color: black;
+    * {
       margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body, html {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      width: 200vw; /* 두 화면 연결 */
+      height: 100vh;
+      scroll-behavior: smooth;
+      overflow-x: scroll;
+    }
+
+    .page {
+      flex: 0 0 100vw;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
+      background: black;
     }
 
-    .container {
-      width: 300px;
-      height: 500px;
-      border: 3px solid white;
+    .beaker {
+      width: 200px;
+      height: 300px;
+      border-left: 5px solid white;
+      border-right: 5px solid white;
+      border-bottom: 5px solid white;
+      border-top: none;
+      background-color: transparent;
       position: relative;
     }
 
     .label {
       color: white;
       position: absolute;
-      right: -50px;
       top: 50%;
-      transform: translateY(-50%);
+      right: -100px;
       font-size: 24px;
-      font-weight: bold;
+      transform: translateY(-50%);
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <div class="label">여기</div>
-    <!-- 여기에 비커, 드래그 버튼 같은 실험 UI 추가할 수 있음 -->
+    <!-- 첫 번째 화면 -->
+    <div class="page">
+      <div class="beaker">
+        <div class="label">이거</div>
+      </div>
+    </div>
+
+    <!-- 두 번째 화면 -->
+    <div class="page">
+      <h1 style="color:white">두 번째 화면!</h1>
+    </div>
   </div>
 </body>
 </html>
