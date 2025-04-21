@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>스와이프 페이지</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>비커 UI</title>
   <style>
     * {
       margin: 0;
@@ -13,16 +13,15 @@
 
     html, body {
       height: 100vh;
-      overflow: hidden; /* 스크롤 바 안 보이게 */
+      overflow: hidden;
     }
 
     .container {
       display: flex;
-      width: 200vw; /* 두 페이지 */
+      width: 200vw;
       height: 100vh;
-      overflow-x: hidden; /* 여기선 JS로만 스크롤함 */
       scroll-behavior: smooth;
-      touch-action: pan-y; /* 수직 스크롤은 허용 */
+      overflow-x: auto;
     }
 
     .page {
@@ -31,50 +30,83 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: 2rem;
-      background: black;
+      background-color: black;
+      position: relative;
+    }
+
+    .beaker {
+      width: 200px;
+      height: 300px;
+      border-left: 5px solid white;
+      border-right: 5px solid white;
+      border-bottom: 5px solid white;
+      border-top: none;
+      position: relative;
+    }
+
+    .label {
       color: white;
+      position: absolute;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 24px;
+    }
+
+    .nav-btn {
+      position: absolute;
+      bottom: 30px;
+      padding: 10px 20px;
+      background-color: white;
+      color: black;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    .next-btn {
+      right: 30px;
+    }
+
+    .prev-btn {
+      left: 30px;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="scroll-container">
-    <div class="page">첫 번째 페이지</div>
-    <div class="page">두 번째 페이지</div>
+  <div class="container" id="container">
+    <!-- 첫 번째 페이지 -->
+    <div class="page">
+      <div class="beaker">
+        <div class="label">이거</div>
+      </div>
+      <button class="nav-btn next-btn" onclick="goToNext()">다음</button>
+    </div>
+
+    <!-- 두 번째 페이지 -->
+    <div class="page">
+      <h1 style="color:white">두 번째 화면!</h1>
+      <button class="nav-btn prev-btn" onclick="goToPrev()">이전</button>
+    </div>
   </div>
 
   <script>
-    const container = document.getElementById("scroll-container");
+    function goToNext() {
+      const container = document.getElementById("container");
+      container.scrollTo({
+        left: window.innerWidth,
+        behavior: "smooth"
+      });
+    }
 
-    let startX = 0;
-    let isTouching = false;
-
-    container.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-      isTouching = true;
-    });
-
-    container.addEventListener("touchend", (e) => {
-      if (!isTouching) return;
-      isTouching = false;
-
-      const endX = e.changedTouches[0].clientX;
-      const diff = startX - endX;
-
-      if (diff > 50) {
-        // 오른쪽으로 넘김 (다음 페이지)
-        container.scrollTo({
-          left: window.innerWidth,
-          behavior: "smooth"
-        });
-      } else if (diff < -50) {
-        // 왼쪽으로 넘김 (이전 페이지)
-        container.scrollTo({
-          left: 0,
-          behavior: "smooth"
-        });
-      }
-    });
+    function goToPrev() {
+      const container = document.getElementById("container");
+      container.scrollTo({
+        left: 0,
+        behavior: "smooth"
+      });
+    }
   </script>
 </body>
 </html>
