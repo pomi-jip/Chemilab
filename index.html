@@ -3,25 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>비커 UI</title>
+  <title>Chemilab</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body, html {
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
       height: 100vh;
       overflow: hidden;
     }
 
     .container {
       display: flex;
-      width: 200vw;
-      height: 100vh;
-      scroll-behavior: smooth;
+      width: 400vw;
+      height: 200vh;
       overflow-x: auto;
+      scroll-behavior: smooth;
     }
 
     .page {
@@ -31,67 +26,47 @@
       justify-content: center;
       align-items: center;
       background: black;
-      position: relative;
-    }
-
-    .beaker {
-      width: 200px;
-      height: 300px;
-      border-left: 5px solid white;
-      border-right: 5px solid white;
-      border-bottom: 5px solid white;
-      border-top: none;
-      background-color: transparent;
-      position: relative;
-    }
-
-    .label {
       color: white;
-      position: absolute;
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 24px;
+      font-size: 2rem;
     }
-
-    .next-btn {
-      position: absolute;
-      bottom: 30px;
-      right: 30px;
-      padding: 10px 20px;
-      background-color: white;
-      border: none;
-      font-size: 16px;
-      cursor: pointer;
-      border-radius: 5px;
-    }
-
   </style>
 </head>
 <body>
   <div class="container" id="scroll-container">
-    <!-- 첫 번째 화면 -->
-    <div class="page">
-      <div class="beaker">
-        <div class="label">이거</div>
-      </div>
-      <button class="next-btn" onclick="goToNextPage()">다음</button>
-    </div>
-
-    <!-- 두 번째 화면 -->
-    <div class="page">
-      <h1 style="color:white">두 번째 화면!</h1>
-    </div>
+    <div class="page">첫 번째 페이지</div>
+    <div class="page">두 번째 페이지</div>
   </div>
 
   <script>
-    function goToNextPage() {
-      const container = document.getElementById('scroll-container');
-      container.scrollBy({
-        left: window.innerWidth,
-        behavior: 'smooth'
-      });
-    }
+    const container = document.getElementById('scroll-container');
+    let startX = 0;
+    let currentScroll = 0;
+
+    container.addEventListener('touchstart', (e) => {
+      startX = e.touches[0].clientX;
+      currentScroll = container.scrollLeft;
+    });
+
+    container.addEventListener('touchend', (e) => {
+      const endX = e.changedTouches[0].clientX;
+      const diffX = startX - endX;
+
+      if (Math.abs(diffX) > 50) { // 스와이프 감지 범위
+        if (diffX > 0) {
+          // 오른쪽으로 스와이프 -> 다음 페이지
+          container.scrollTo({
+            left: currentScroll + window.innerWidth,
+            behavior: 'smooth'
+          });
+        } else {
+          // 왼쪽으로 스와이프 -> 이전 페이지
+          container.scrollTo({
+            left: currentScroll - window.innerWidth,
+            behavior: 'smooth'
+          });
+        }
+      }
+    });
   </script>
 </body>
 </html>
