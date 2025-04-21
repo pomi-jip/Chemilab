@@ -2,8 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- viewport 설정 추가 -->
-  <title>chemilab</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>비커 UI</title>
   <style>
     * {
       margin: 0;
@@ -18,19 +18,20 @@
 
     .container {
       display: flex;
-      width: 200%; /* 두 화면 연결 */
+      width: 200vw;
       height: 100vh;
       scroll-behavior: smooth;
-      overflow-x: auto; /* 모바일에서 스크롤 가능하도록 */
+      overflow-x: auto;
     }
 
     .page {
-      flex: 0 0 100vw; /* 각 페이지가 100vw(뷰포트의 너비) 차지 */
+      flex: 0 0 100vw;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
       background: black;
+      position: relative;
     }
 
     .beaker {
@@ -42,7 +43,6 @@
       border-top: none;
       background-color: transparent;
       position: relative;
-      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .label {
@@ -53,14 +53,29 @@
       transform: translateX(-50%);
       font-size: 24px;
     }
+
+    .next-btn {
+      position: absolute;
+      bottom: 30px;
+      right: 30px;
+      padding: 10px 20px;
+      background-color: white;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="scroll-container">
     <!-- 첫 번째 화면 -->
     <div class="page">
       <div class="beaker">
+        <div class="label">이거</div>
       </div>
+      <button class="next-btn" onclick="goToNextPage()">다음</button>
     </div>
 
     <!-- 두 번째 화면 -->
@@ -68,7 +83,15 @@
       <h1 style="color:white">두 번째 화면!</h1>
     </div>
   </div>
+
+  <script>
+    function goToNextPage() {
+      const container = document.getElementById('scroll-container');
+      container.scrollBy({
+        left: window.innerWidth,
+        behavior: 'smooth'
+      });
+    }
+  </script>
 </body>
 </html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
