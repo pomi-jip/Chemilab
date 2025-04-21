@@ -2,7 +2,8 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>Chemilab-small labratory</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- viewport 설정 추가 -->
+  <title>chemilab</title>
   <style>
     * {
       margin: 0;
@@ -17,14 +18,14 @@
 
     .container {
       display: flex;
-      width: 200vw; /* 두 화면 연결 */
+      width: 200%; /* 두 화면 연결 */
       height: 100vh;
       scroll-behavior: smooth;
-      overflow-x: auto;
+      overflow-x: auto; /* 모바일에서 스크롤 가능하도록 */
     }
 
     .page {
-      flex: 0 0 100vw;
+      flex: 0 0 100vw; /* 각 페이지가 100vw(뷰포트의 너비) 차지 */
       height: 100vh;
       display: flex;
       justify-content: center;
@@ -69,3 +70,5 @@
   </div>
 </body>
 </html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
