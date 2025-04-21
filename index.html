@@ -3,20 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chemilab</title>
+  <title>스와이프 페이지</title>
   <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     html, body {
       height: 100vh;
-      overflow: hidden;
+      overflow: hidden; /* 스크롤 바 안 보이게 */
     }
 
     .container {
       display: flex;
-      width: 400vw;
-      height: 200vh;
-      overflow-x: auto;
+      width: 200vw; /* 두 페이지 */
+      height: 100vh;
+      overflow-x: hidden; /* 여기선 JS로만 스크롤함 */
       scroll-behavior: smooth;
+      touch-action: pan-y; /* 수직 스크롤은 허용 */
     }
 
     .page {
@@ -25,9 +31,9 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      font-size: 2rem;
       background: black;
       color: white;
-      font-size: 2rem;
     }
   </style>
 </head>
@@ -38,33 +44,35 @@
   </div>
 
   <script>
-    const container = document.getElementById('scroll-container');
-    let startX = 0;
-    let currentScroll = 0;
+    const container = document.getElementById("scroll-container");
 
-    container.addEventListener('touchstart', (e) => {
+    let startX = 0;
+    let isTouching = false;
+
+    container.addEventListener("touchstart", (e) => {
       startX = e.touches[0].clientX;
-      currentScroll = container.scrollLeft;
+      isTouching = true;
     });
 
-    container.addEventListener('touchend', (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const diffX = startX - endX;
+    container.addEventListener("touchend", (e) => {
+      if (!isTouching) return;
+      isTouching = false;
 
-      if (Math.abs(diffX) > 50) { // 스와이프 감지 범위
-        if (diffX > 0) {
-          // 오른쪽으로 스와이프 -> 다음 페이지
-          container.scrollTo({
-            left: currentScroll + window.innerWidth,
-            behavior: 'smooth'
-          });
-        } else {
-          // 왼쪽으로 스와이프 -> 이전 페이지
-          container.scrollTo({
-            left: currentScroll - window.innerWidth,
-            behavior: 'smooth'
-          });
-        }
+      const endX = e.changedTouches[0].clientX;
+      const diff = startX - endX;
+
+      if (diff > 50) {
+        // 오른쪽으로 넘김 (다음 페이지)
+        container.scrollTo({
+          left: window.innerWidth,
+          behavior: "smooth"
+        });
+      } else if (diff < -50) {
+        // 왼쪽으로 넘김 (이전 페이지)
+        container.scrollTo({
+          left: 0,
+          behavior: "smooth"
+        });
       }
     });
   </script>
