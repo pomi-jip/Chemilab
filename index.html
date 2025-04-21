@@ -20,7 +20,7 @@
       width: 200vw; /* 두 화면 연결 */
       height: 100vh;
       scroll-behavior: smooth;
-      overflow-x: scroll;
+      overflow-x: auto;
     }
 
     .page {
@@ -41,15 +41,16 @@
       border-top: none;
       background-color: transparent;
       position: relative;
+      box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     }
 
     .label {
       color: white;
       position: absolute;
-      top: 50%;
-      right: -100px;
+      top: 15%;
+      left: 50%;
+      transform: translateX(-50%);
       font-size: 24px;
-      transform: translateY(-50%);
     }
   </style>
 </head>
@@ -58,7 +59,6 @@
     <!-- 첫 번째 화면 -->
     <div class="page">
       <div class="beaker">
-        <div class="label">이거</div>
       </div>
     </div>
 
